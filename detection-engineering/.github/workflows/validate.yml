@@ -1,0 +1,58 @@
+name: Validate detections
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  sigma:
+    name: sigma-cli check & convert
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      # Rule syntax + best-practice validators (valid ATT&CK tags, unique ids, dangling
+      # detections, bad modifier combinations ...). Fails the build on any issue.
+      - name: sigma check
+        run: sigma check --fail-on-issues rules/
+
+      # Proves every rule actually compiles for a real backend (catches problems a pure
+      # syntax check misses, e.g. unsupported modifier/field combinations).
+      - name: sigma convert (Splunk)
+        run: sigma convert -t splunk -p splunk_windows rules/ > /dev/null
+
+  tests:
+    name: sample-log tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: pytest
+        run: python -m pytest -q
+
+      - name: ATT&CK coverage summary
+        if: always()
+        run: python tools/coverage_report.py >> "$GITHUB_STEP_SUMMARY"

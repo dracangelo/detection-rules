@@ -1,0 +1,55 @@
+{
+  "rule": "proc_creation_win_schtasks_create_suspicious",
+  "should_match": [
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\schtasks.exe",
+      "CommandLine": "SCHTASKS /Create /SC ONCE /TN spawn /TR C:\\windows\\system32\\cmd.exe /ST 20:10",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\schtasks.exe",
+      "CommandLine": "schtasks.exe /create /tn Updater /tr \"C:\\Users\\Public\\update.exe\" /sc minute /mo 5 /ru SYSTEM",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\schtasks.exe",
+      "CommandLine": "schtasks /create /tn x /tr \"powershell -w hidden -c iex(1)\" /sc daily",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    }
+  ],
+  "should_not_match": [
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\schtasks.exe",
+      "CommandLine": "schtasks.exe /query /fo LIST /v",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\schtasks.exe",
+      "CommandLine": "schtasks.exe /create /tn Backup /tr \"C:\\Program Files\\Vendor\\backup.exe\" /sc daily",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\schtasks.exe",
+      "CommandLine": "schtasks.exe /delete /tn spawn /f",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    }
+  ]
+}

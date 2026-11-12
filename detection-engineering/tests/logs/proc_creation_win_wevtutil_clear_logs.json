@@ -1,0 +1,55 @@
+{
+  "rule": "proc_creation_win_wevtutil_clear_logs",
+  "should_match": [
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\wevtutil.exe",
+      "CommandLine": "wevtutil cl System",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\wevtutil.exe",
+      "CommandLine": "\"C:\\Windows\\system32\\wevtutil.exe\" cl Security",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\wevtutil.exe",
+      "CommandLine": "wevtutil.exe clear-log Application",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    }
+  ],
+  "should_not_match": [
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\wevtutil.exe",
+      "CommandLine": "wevtutil qe Security /c:5 /f:text",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\wevtutil.exe",
+      "CommandLine": "wevtutil el",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\cmd.exe",
+      "CommandLine": "cmd.exe /c echo wevtutil cl System",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
+# raw lab telemetry can contain hostnames/usernames; keep it out of git unless sanitized
+lab/results/

@@ -1,0 +1,63 @@
+{
+  "rule": "proc_creation_win_defender_service_tamper_sc",
+  "should_match": [
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\sc.exe",
+      "CommandLine": "sc stop WinDefend",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\sc.exe",
+      "CommandLine": "sc config WinDefend start=disabled",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\sc.exe",
+      "CommandLine": "sc.exe delete WinDefend",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    }
+  ],
+  "should_not_match": [
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\sc.exe",
+      "CommandLine": "sc query WinDefend",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\sc.exe",
+      "CommandLine": "sc start WinDefend",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\sc.exe",
+      "CommandLine": "sc config WinDefend start=enabled",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\sc.exe",
+      "CommandLine": "sc stop Spooler",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    }
+  ]
+}

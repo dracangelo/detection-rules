@@ -1,0 +1,55 @@
+{
+  "rule": "proc_creation_win_reg_run_key_persistence",
+  "should_match": [
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\reg.exe",
+      "CommandLine": "REG ADD \"HKCU\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\" /V \"Atomic Red Team\" /t REG_SZ /F /D \"C:\\Path\\AtomicRedTeam.exe\"",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\reg.exe",
+      "CommandLine": "reg add HKLM\\Software\\Microsoft\\Windows\\CurrentVersion\\RunOnce /v u /d C:\\Temp\\a.exe",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\reg.exe",
+      "CommandLine": "reg add HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Policies\\Explorer\\Run /v 1 /d C:\\a.exe",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    }
+  ],
+  "should_not_match": [
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\reg.exe",
+      "CommandLine": "reg query HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\reg.exe",
+      "CommandLine": "reg add HKCU\\Software\\Vendor\\Settings /v Theme /d dark",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\reg.exe",
+      "CommandLine": "reg delete HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Run /v Old /f",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    }
+  ]
+}

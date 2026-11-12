@@ -1,0 +1,33 @@
+title: Mshta Executing Inline Script or Remote Content
+id: 1820137b-5f3f-417a-aa37-e19772b37423
+status: experimental
+description: >
+    Detects mshta.exe launched with an inline script scheme (vbscript, javascript, about),
+    a remote URL or an .hta file, a classic signed-binary proxy execution technique.
+references:
+    - https://attack.mitre.org/techniques/T1218/005/
+    - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1218.005/T1218.005.md
+author: detection-engineering
+date: 2026-11-12
+tags:
+    - attack.stealth
+    - attack.t1218.005
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection_img:
+        - Image|endswith: '\mshta.exe'
+        - OriginalFileName: 'MSHTA.EXE'
+    selection_cmd:
+        CommandLine|contains:
+            - 'vbscript:'
+            - 'javascript:'
+            - 'about:'
+            - 'http://'
+            - 'https://'
+            - '.hta'
+    condition: all of selection_*
+falsepositives:
+    - Legacy line-of-business HTA applications and some older installers
+level: medium

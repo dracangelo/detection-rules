@@ -1,0 +1,42 @@
+{
+  "rule": "ps_script_defender_tamper_set_mppreference",
+  "should_match": [
+    {
+      "EventID": 4104,
+      "Channel": "Microsoft-Windows-PowerShell/Operational",
+      "ScriptBlockText": "Set-MpPreference -DisableRealtimeMonitoring 1\nSet-MpPreference -DisableBehaviorMonitoring 1"
+    },
+    {
+      "EventID": 4104,
+      "Channel": "Microsoft-Windows-PowerShell/Operational",
+      "ScriptBlockText": "Set-MpPreference -drtm $True"
+    },
+    {
+      "EventID": 4104,
+      "Channel": "Microsoft-Windows-PowerShell/Operational",
+      "ScriptBlockText": "set-mppreference -DisableScriptScanning $true"
+    }
+  ],
+  "should_not_match": [
+    {
+      "EventID": 4104,
+      "Channel": "Microsoft-Windows-PowerShell/Operational",
+      "ScriptBlockText": "Set-MpPreference -DisableRealtimeMonitoring 0"
+    },
+    {
+      "EventID": 4104,
+      "Channel": "Microsoft-Windows-PowerShell/Operational",
+      "ScriptBlockText": "Get-MpPreference | Select-Object DisableRealtimeMonitoring"
+    },
+    {
+      "EventID": 4104,
+      "Channel": "Microsoft-Windows-PowerShell/Operational",
+      "ScriptBlockText": "Set-MpPreference -ScanAvgCPULoadFactor 30"
+    },
+    {
+      "EventID": 4104,
+      "Channel": "Microsoft-Windows-PowerShell/Operational",
+      "ScriptBlockText": "Add-Content -Path notes.txt -Value 'Set-MpPreference docs'"
+    }
+  ]
+}

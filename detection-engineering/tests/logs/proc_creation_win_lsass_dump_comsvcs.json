@@ -1,0 +1,56 @@
+{
+  "rule": "proc_creation_win_lsass_dump_comsvcs",
+  "should_match": [
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\rundll32.exe",
+      "CommandLine": "C:\\Windows\\System32\\rundll32.exe C:\\windows\\System32\\comsvcs.dll, MiniDump 648 C:\\Users\\analyst\\AppData\\Local\\Temp\\lsass-comsvcs.dmp full",
+      "ParentImage": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\rundll32.exe",
+      "CommandLine": "rundll32 comsvcs.dll #24 648 C:\\Windows\\Temp\\x.dmp full",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Users\\Public\\renamed.exe",
+      "CommandLine": "renamed.exe comsvcs.dll, minidump 648 C:\\Temp\\y.dmp full",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst",
+      "OriginalFileName": "RUNDLL32.EXE"
+    }
+  ],
+  "should_not_match": [
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\rundll32.exe",
+      "CommandLine": "rundll32.exe shell32.dll,Control_RunDLL desk.cpl",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\rundll32.exe",
+      "CommandLine": "rundll32.exe C:\\Windows\\System32\\comsvcs.dll,DllRegisterServer",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\taskmgr.exe",
+      "CommandLine": "taskmgr.exe /4",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+title: Defender Protections Disabled via Set-MpPreference
+id: 8f5a1f13-f08c-40b7-853c-6c2c29e65767
+status: experimental
+description: >
+    Detects PowerShell script blocks that turn off Microsoft Defender protections with
+    Set-MpPreference, including the short aliases (-drtm, -dbm, -dscrptsc, -dbaf). Script
+    block logging is required because Atomic Red Team and real intrusions run this inside a
+    PowerShell session, so no dedicated process-creation event is produced. (ATT&CK: Disable or Modify Tools, formerly T1562.001.)
+references:
+    - https://attack.mitre.org/techniques/T1685/
+    - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1685/T1685.md
+author: detection-engineering
+date: 2026-11-12
+tags:
+    - attack.defense-impairment
+    - attack.t1685
+logsource:
+    category: ps_script
+    product: windows
+    definition: 'Requires PowerShell Script Block Logging (Event ID 4104)'
+detection:
+    selection:
+        ScriptBlockText|re: '(?i)Set-MpPreference\s+.*-(DisableRealtimeMonitoring|DisableBehaviorMonitoring|DisableScriptScanning|DisableBlockAtFirstSeen|DisableIOAVProtection|drtm|dbm|dscrptsc|dbaf|dioavp)\s+(\$true|1)\b'
+    condition: selection
+falsepositives:
+    - Administrators temporarily disabling real-time monitoring for troubleshooting
+level: high

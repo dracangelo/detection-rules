@@ -1,0 +1,125 @@
+{
+  "_comment": "Maps each rule to the Atomic Red Team test(s) that should trigger it. 'attack_id' is the ATT&CK ID used in the Sigma tag and 'atomic_id' is the folder name in redcanaryco/atomic-red-team; they currently match because upstream renumbered T1562.001 -> T1685 and T1070.001 -> T1685.005 (and the Defense Evasion tactic became Stealth / Defense Impairment). Tests are selected by GUID so renumbering of test indexes cannot break the run. Verify with: Invoke-AtomicTest <atomic_id> -ShowDetailsBrief",
+  "rules": {
+    "proc_creation_win_powershell_encoded_command": {
+      "attack_id": "T1059.001",
+      "atomic_id": "T1059.001",
+      "tests": [
+        {
+          "guid": "86a43bad-12e3-4e85-b97c-4d5cf25b95c3",
+          "name": "ATHPowerShellCommandLineParameter -EncodedCommand parameter variations",
+          "elevated": false
+        }
+      ]
+    },
+    "proc_creation_win_lsass_dump_comsvcs": {
+      "attack_id": "T1003.001",
+      "atomic_id": "T1003.001",
+      "tests": [
+        {
+          "guid": "2536dee2-12fb-459a-8c37-971844fa73be",
+          "name": "Dump LSASS.exe Memory using comsvcs.dll",
+          "elevated": true
+        }
+      ]
+    },
+    "proc_creation_win_schtasks_create_suspicious": {
+      "attack_id": "T1053.005",
+      "atomic_id": "T1053.005",
+      "tests": [
+        {
+          "guid": "42f53695-ad4a-4546-abb6-7d837f644a71",
+          "name": "Scheduled task Local",
+          "elevated": false
+        }
+      ]
+    },
+    "proc_creation_win_reg_run_key_persistence": {
+      "attack_id": "T1547.001",
+      "atomic_id": "T1547.001",
+      "tests": [
+        {
+          "guid": "e55be3fd-3521-4610-9d1a-e210e42dcf05",
+          "name": "Reg Key Run",
+          "elevated": false
+        }
+      ]
+    },
+    "proc_creation_win_wevtutil_clear_logs": {
+      "attack_id": "T1685.005",
+      "atomic_id": "T1685.005",
+      "tests": [
+        {
+          "guid": "e6abb60e-26b8-41da-8aae-0c35174b0967",
+          "name": "Clear Logs (wevtutil cl System)",
+          "elevated": true
+        }
+      ]
+    },
+    "proc_creation_win_mshta_suspicious": {
+      "attack_id": "T1218.005",
+      "atomic_id": "T1218.005",
+      "tests": [
+        {
+          "guid": "906865c3-e05f-4acc-85c4-fbc185455095",
+          "name": "Mshta executes VBScript to execute malicious command",
+          "elevated": false
+        },
+        {
+          "guid": "8707a805-2b76-4f32-b1c0-14e558205772",
+          "name": "Mshta used to Execute PowerShell",
+          "elevated": false
+        }
+      ]
+    },
+    "proc_creation_win_defender_service_tamper_sc": {
+      "attack_id": "T1685",
+      "atomic_id": "T1685",
+      "tests": [
+        {
+          "guid": "aa875ed4-8935-47e2-b2c5-6ec00ab220d2",
+          "name": "Tamper with Windows Defender Command Prompt",
+          "elevated": true
+        }
+      ]
+    },
+    "ps_script_defender_tamper_set_mppreference": {
+      "attack_id": "T1685",
+      "atomic_id": "T1685",
+      "tests": [
+        {
+          "guid": "6b8df440-51ec-4d53-bf83-899591c9b5d7",
+          "name": "Tamper with Windows Defender ATP PowerShell",
+          "elevated": true
+        },
+        {
+          "guid": "c531aa6e-9c97-4b29-afee-9b7be6fc8a64",
+          "name": "Tamper with Windows Defender ATP using Aliases - PowerShell",
+          "elevated": true
+        }
+      ]
+    },
+    "proc_creation_win_net_user_add": {
+      "attack_id": "T1136.001",
+      "atomic_id": "T1136.001",
+      "tests": [
+        {
+          "guid": "6657864e-0323-4206-9344-ac9cd7265a4f",
+          "name": "Create a new user in a command prompt",
+          "elevated": true
+        }
+      ]
+    },
+    "proc_creation_win_vssadmin_delete_shadows": {
+      "attack_id": "T1490",
+      "atomic_id": "T1490",
+      "tests": [
+        {
+          "guid": "43819286-91a9-4369-90ed-d31fb4da2c01",
+          "name": "Windows - Delete Volume Shadow Copies",
+          "elevated": true
+        }
+      ]
+    }
+  }
+}

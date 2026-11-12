@@ -1,0 +1,32 @@
+title: PowerShell Encoded Command Execution
+id: ea4af78d-2beb-4845-9137-9e7384b533f7
+status: experimental
+description: >
+    Detects PowerShell launched with -EncodedCommand or any of its accepted abbreviations
+    (-e, -ec, -en, -enc ...) followed by a base64 blob. Loaders and hands-on-keyboard
+    intrusions use this to hide script content from command-line logging.
+references:
+    - https://attack.mitre.org/techniques/T1059/001/
+    - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1059.001/T1059.001.md
+author: detection-engineering
+date: 2026-11-12
+tags:
+    - attack.execution
+    - attack.t1059.001
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection_img:
+        Image|endswith:
+            - '\powershell.exe'
+            - '\pwsh.exe'
+    selection_enc:
+        CommandLine|re: '(?i)\s[-/–—―]e(c|n[a-z]*)?\s+[A-Za-z0-9+/=]{16,}'
+    filter_main_sccm:
+        ParentImage|endswith: '\CcmExec.exe'
+    condition: selection_img and selection_enc and not filter_main_sccm
+falsepositives:
+    - Configuration management and RMM agents that pass encoded commands (tune by parent image)
+    - Build and deployment tooling
+level: medium

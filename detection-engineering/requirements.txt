@@ -1,0 +1,4 @@
+sigma-cli==4.0.1
+pysigma-backend-splunk==3.0.0
+PyYAML==6.0.3
+pytest==9.2.0

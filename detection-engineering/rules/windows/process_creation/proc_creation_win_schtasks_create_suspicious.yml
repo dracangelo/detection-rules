@@ -1,0 +1,44 @@
+title: Scheduled Task Created Running Script Host or User-Writable Path
+id: 747702bb-41b7-4287-98ce-6825722106e5
+status: experimental
+description: >
+    Detects schtasks.exe creating a task whose action launches a shell, script host,
+    LOLBin or a binary from a user-writable location. Common persistence and execution method.
+references:
+    - https://attack.mitre.org/techniques/T1053/005/
+    - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1053.005/T1053.005.md
+author: detection-engineering
+date: 2026-11-12
+tags:
+    - attack.execution
+    - attack.persistence
+    - attack.privilege-escalation
+    - attack.t1053.005
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection_img:
+        - Image|endswith: '\schtasks.exe'
+        - OriginalFileName: 'schtasks.exe'
+    selection_create:
+        CommandLine|contains:
+            - '/create'
+            - '-create'
+    selection_susp_action:
+        CommandLine|contains:
+            - 'cmd.exe'
+            - 'powershell'
+            - 'pwsh'
+            - 'mshta'
+            - 'wscript'
+            - 'cscript'
+            - '\AppData\'
+            - '\Temp\'
+            - '\Users\Public\'
+            - '\ProgramData\'
+    condition: all of selection_*
+falsepositives:
+    - Software installers and updaters that register tasks under ProgramData or AppData
+    - Admin scripts that schedule cmd.exe wrappers
+level: medium

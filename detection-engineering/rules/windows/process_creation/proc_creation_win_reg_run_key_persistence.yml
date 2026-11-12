@@ -1,0 +1,33 @@
+title: Registry Run Key Added via reg.exe
+id: 945f45de-7d37-49d8-bb39-db0588676d64
+status: experimental
+description: >
+    Detects reg.exe adding a value under a Run, RunOnce or Policies\Explorer\Run autostart key.
+references:
+    - https://attack.mitre.org/techniques/T1547/001/
+    - https://github.com/redcanaryco/atomic-red-team/blob/master/atomics/T1547.001/T1547.001.md
+author: detection-engineering
+date: 2026-11-12
+tags:
+    - attack.persistence
+    - attack.privilege-escalation
+    - attack.t1547.001
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection_img:
+        - Image|endswith: '\reg.exe'
+        - OriginalFileName: 'reg.exe'
+    selection_key_run:
+        CommandLine|contains|all:
+            - ' add '
+            - '\CurrentVersion\Run'
+    selection_key_policy:
+        CommandLine|contains|all:
+            - ' add '
+            - '\Policies\Explorer\Run'
+    condition: selection_img and 1 of selection_key_*
+falsepositives:
+    - Installers and IT scripts that register autostart entries
+level: medium
